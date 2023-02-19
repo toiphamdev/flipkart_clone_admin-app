@@ -1,0 +1,27 @@
+.modal-header {
+  padding: 5px 15px;
+  background-color: #333;
+}
+.modal-title {
+  color: #fff;
+  font-size: 18px;
+}
+.modal-footer {
+  padding: 5px 15px;
+}
+
+.actionBtnContainer {
+  display: flex;
+  align-items: center;
+}
+
+.actionBtnContainer > button {
+  margin: 0 5px;
+  display: flex;
+  align-items: center;
+  font-size: 14px;
+}
+
+.actionBtnContainer > button > span {
+  padding-left: 2px;
+}
