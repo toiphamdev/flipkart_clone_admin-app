@@ -31,9 +31,22 @@ const Orders = (props) => {
 
   return (
     <Layout sidebar>
+<<<<<<< HEAD
       {order.orders &&
         order.orders.map((orderItem, index) => (
           <Card
+=======
+      {order.orders && order.orders.map((orderItem, index) => (
+        <Card
+          style={{
+            margin: "10px 0",
+          }}
+          key={index}
+          header={true}
+          headerleft={orderItem._id}
+        >
+          <div
+>>>>>>> 32d8bff82ce2391adef0a2a7176c9ce33f8973f8
             style={{
               margin: "10px 0",
             }}
