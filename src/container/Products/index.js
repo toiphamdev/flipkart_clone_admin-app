@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout";
 import Input from "../../components/UI/Input";
 import ConvertModal from "../../components/UI/Modal";
-import { addProduct } from "../../redux/actions";
+import { addProduct, deleteProductById } from "../../redux/actions";
 import { generatePublicUrl } from "../../urlConfig";
 import "./style.css";
 
@@ -34,13 +34,16 @@ function Products() {
       form.append("productPicture", pic);
     }
     dispatch(addProduct(form));
-    // setName("");
-    // setPrice("");
-    // setCategoryId("");
-    // setDescription("");
-    // setQuantity("");
-    // setProductPictures([]);
-    // setShow(false);
+    setName("");
+    setPrice("");
+    setCategoryId("");
+    setDescription("");
+    setQuantity("");
+    setProductPictures([]);
+    setShow(false);
+  };
+  const handleDeleteProduct = (id) => {
+    dispatch(deleteProductById(id));
   };
   const createCategoryList = (categories, options = []) => {
     for (let category of categories) {
@@ -90,7 +93,12 @@ function Products() {
                       >
                         View
                       </span>
-                      <span className="btn btn-sm btn-danger">Delete</span>
+                      <span
+                        onClick={() => handleDeleteProduct(pro._id)}
+                        className="btn btn-sm btn-danger"
+                      >
+                        Delete
+                      </span>
                     </td>
                   </tr>
                 );

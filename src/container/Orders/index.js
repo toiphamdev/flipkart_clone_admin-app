@@ -9,6 +9,7 @@ import "./style.css";
 
 const Orders = (props) => {
   const order = useSelector((state) => state.order);
+
   const [type, setType] = useState("");
   const dispatch = useDispatch();
 
@@ -30,112 +31,113 @@ const Orders = (props) => {
 
   return (
     <Layout sidebar>
-      {order.orders.map((orderItem, index) => (
-        <Card
-          style={{
-            margin: "10px 0",
-          }}
-          key={index}
-          header={true}
-          headerleft={orderItem._id}
-        >
-          <div
+      {order.orders &&
+        order.orders.map((orderItem, index) => (
+          <Card
             style={{
-              display: "flex",
-              justifyContent: "space-between",
-              padding: "50px 50px",
-              alignItems: "center",
+              margin: "10px 0",
             }}
+            key={index}
+            header={true}
+            headerleft={orderItem._id}
           >
-            <div>
-              <div className="title">Items</div>
-              {orderItem.items.map((item, index) => (
-                <div className="value" key={index}>
-                  {item.productId.name}
-                </div>
-              ))}
-            </div>
-            <div>
-              <span className="title">Total Price</span>
-              <br />
-              <span className="value">{orderItem.totalAmount}</span>
-            </div>
-            <div>
-              <span className="title">Payment Type</span> <br />
-              <span className="value">{orderItem.paymentType}</span>
-            </div>
-            <div>
-              <span className="title">Payment Status</span> <br />
-              <span className="value">{orderItem.paymentStatus}</span>
-            </div>
-          </div>
-          <div
-            style={{
-              boxSizing: "border-box",
-              padding: "100px",
-              display: "flex",
-              alignItems: "center",
-            }}
-          >
-            <div className="orderTrack">
-              {orderItem.orderStatus.map((status, index) => (
-                <div
-                  key={index}
-                  className={`orderStatus ${
-                    status.isCompleted ? "active" : ""
-                  }`}
-                >
-                  <div
-                    className={`point ${status.isCompleted ? "active" : ""}`}
-                  ></div>
-                  <div className="orderInfo">
-                    <div className="status">{status.type}</div>
-                    <div className="date">{formatDate(status.date)}</div>
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "space-between",
+                padding: "50px 50px",
+                alignItems: "center",
+              }}
+            >
+              <div>
+                <div className="title">Items</div>
+                {orderItem.items.map((item, index) => (
+                  <div className="value" key={index}>
+                    {item.productId && item.productId.name}
                   </div>
-                </div>
-              ))}
+                ))}
+              </div>
+              <div>
+                <span className="title">Total Price</span>
+                <br />
+                <span className="value">{orderItem.totalAmount}</span>
+              </div>
+              <div>
+                <span className="title">Payment Type</span> <br />
+                <span className="value">{orderItem.paymentType}</span>
+              </div>
+              <div>
+                <span className="title">Payment Status</span> <br />
+                <span className="value">{orderItem.paymentStatus}</span>
+              </div>
             </div>
-
-            {/* select input to apply order action */}
             <div
               style={{
-                padding: "0 50px",
-                margin: "0 20px",
                 boxSizing: "border-box",
+                padding: "100px",
+                display: "flex",
+                alignItems: "center",
               }}
             >
-              <select
-                className="form-select form-select-sm"
-                onChange={(e) => setType(e.target.value)}
-              >
-                <option value={""}>select status</option>
-                {orderItem.orderStatus.map((status, index) => {
-                  return !status.isCompleted ? (
-                    <option key={status.type} value={status.type}>
-                      {status.type}
-                    </option>
-                  ) : null;
-                })}
-              </select>
-            </div>
-            {/* button to confirm action */}
+              <div className="orderTrack">
+                {orderItem.orderStatus.map((status, index) => (
+                  <div
+                    key={index}
+                    className={`orderStatus ${
+                      status.isCompleted ? "active" : ""
+                    }`}
+                  >
+                    <div
+                      className={`point ${status.isCompleted ? "active" : ""}`}
+                    ></div>
+                    <div className="orderInfo">
+                      <div className="status">{status.type}</div>
+                      <div className="date">{formatDate(status.date)}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
 
-            <div
-              style={{
-                padding: "0 50px",
-                boxSizing: "border-box",
-              }}
-            >
-              <button
-                className="btn btn-primary"
-                onClick={() => onOrderUpdate(orderItem._id)}
+              {/* select input to apply order action */}
+              <div
+                style={{
+                  padding: "0 50px",
+                  margin: "0 20px",
+                  boxSizing: "border-box",
+                }}
               >
-                confirm
-              </button>
+                <select
+                  className="form-select form-select-sm"
+                  onChange={(e) => setType(e.target.value)}
+                >
+                  <option value={""}>select status</option>
+                  {orderItem.orderStatus.map((status, index) => {
+                    return !status.isCompleted ? (
+                      <option key={status.type} value={status.type}>
+                        {status.type}
+                      </option>
+                    ) : null;
+                  })}
+                </select>
+              </div>
+              {/* button to confirm action */}
+
+              <div
+                style={{
+                  padding: "0 50px",
+                  boxSizing: "border-box",
+                }}
+              >
+                <button
+                  className="btn btn-primary"
+                  onClick={() => onOrderUpdate(orderItem._id)}
+                >
+                  confirm
+                </button>
+              </div>
             </div>
-          </div>
-        </Card>
-      ))}
+          </Card>
+        ))}
     </Layout>
   );
 };

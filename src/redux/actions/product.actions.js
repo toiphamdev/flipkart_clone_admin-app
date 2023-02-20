@@ -1,5 +1,6 @@
 import { default as axios } from "../../helpers/axios";
 import { productConstants } from "../constants";
+import { getInitialData } from "./initialData.actions";
 
 export const addProduct = (form) => {
   return async (dispatch) => {
@@ -24,5 +25,23 @@ export const addProduct = (form) => {
 };
 
 export const deleteProductById = (_id) => {
-  return;
+  return async (dispatch) => {
+    try {
+      dispatch({ type: productConstants.DELETE_PRODUCT_REQUEST });
+      const res = axios.post("/product/delete-product-by-id", {
+        productId: _id,
+      });
+      if (res.status === 202) {
+        dispatch({ type: productConstants.DELETE_PRODUCT_SUCCESS });
+        getInitialData();
+      } else {
+        dispatch({
+          type: productConstants.DELETE_PRODUCT_FAILURE,
+          payload: { error: (await res).data.error },
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
 };

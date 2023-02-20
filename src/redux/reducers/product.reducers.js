@@ -38,6 +38,27 @@ const productReducer = (state = initState, action) => {
       };
       return coppyState;
     }
+    case productConstants.DELETE_PRODUCT_REQUEST: {
+      let coppyState = {
+        ...state,
+        loading: true,
+      };
+      return coppyState;
+    }
+    case productConstants.DELETE_PRODUCT_SUCCESS: {
+      let coppyState = {
+        ...state,
+        loading: false,
+      };
+      return coppyState;
+    }
+    case productConstants.DELETE_PRODUCT_FAILURE: {
+      let coppyState = {
+        ...state,
+        loading: false,
+      };
+      return coppyState;
+    }
     default:
       break;
   }
